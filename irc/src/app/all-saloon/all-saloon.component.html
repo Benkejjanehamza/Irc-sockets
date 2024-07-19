@@ -1,0 +1,30 @@
+
+
+
+<div class="  text-white h-full  border-r-2 p-5">
+  <form [formGroup]="roomForm" (ngSubmit)="sendFormRoom()" class="field formBloc hiddenPopup">
+    <div class="inputContainer">
+      <input type="input" formControlName="name" [(ngModel)]="dynamicValue" class="form__field" placeholder="Name" name="name" id='name' required />
+      <label for="name" class="form__label">Channel name</label>
+    </div>
+    <div class="buttons-container">
+      <button class="button-arounder">Create</button>
+    </div>
+  </form>
+
+  <div class="flex flex-row justify-between items-center  border-b-2">
+    <h1 class="text-3xl channel-detail w-full">Salon</h1>
+    <img (click)="createSalon()" src="./assets/img/plus.svg" class="cursor-pointer hover:scale-105 transition">
+  </div>
+
+@for (channel of channelsData; track $index) {
+  <div class="salon-detail flex flex-row border-b-2 p-2 cursor-pointer hover:bg-amber-50 hover:text-black" (click)="joinRoom(channel.name)">
+    <img  src="./assets/img/toto.png"  class="img-avatar">
+    <div class="title flex flex-col">
+      <h4 class="font-bold">{{ channel.name }}</h4>
+      <p>Crée par {{ channel.username }}</p>
+    </div>
+  </div>
+}
+
+</div>

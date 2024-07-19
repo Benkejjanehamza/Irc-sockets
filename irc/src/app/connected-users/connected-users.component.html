@@ -1,0 +1,53 @@
+<div class="channel-container flex flex-col gap-4 border-l-2  h-screen text-white  p-5">
+
+  <div class="conta">
+
+  <h1 class="text-xl channel-detail w-full border-b-2">All connected users</h1>
+
+  <div class="connectUserBloc flex flex-col mt-5 justify-between">
+    <h2>Members - {{numberUser}}</h2>
+
+    @for (user of userConnected; track $index){
+      <div class="blocNameConnect flex flex-row gap-7 items-center">
+        <img  src="./assets/img/toto.png"  class="img-avatar w-1/4">
+          <p class="h-min">{{user.pseudo}}</p>
+        <img src="./assets/img/bxs-circle.svg">
+      </div>
+    }
+  </div>
+
+    <h1 class="text-xl channel-detail w-full border-b-2 mt-20">Connected users on channel : {{currentRoom}}</h1>
+
+    <div class="connectUserBloc flex flex-col mt-5 justify-between">
+      <h2>Members - {{numberUserInChannel}}</h2>
+
+      @for (user of userConnectedInChannel; track $index){
+        <div class="blocNameConnect flex flex-row gap-7 items-center">
+          <img  src="./assets/img/toto.png"  class="img-avatar w-1/4">
+          <p class="h-min">{{user}}</p>
+          <img src="./assets/img/bxs-circle.svg">
+        </div>
+      }
+    </div>
+
+</div>
+<div class="flex flex-col items-start">
+  <h2>User Connected</h2>
+  <div class="flex flex-row items-center gap-5">
+    <p>{{ pseudo }}</p>
+    <img src="./assets/img/bxs-circle.svg">
+    <img class="cursor-pointer hover:scale-105 transition" (click)="displayUpdateName()" src="./assets/img/pen.svg">
+  </div>
+
+  @if(inputPseudo){
+    <div id="pseudoUpdate2">
+
+      <form [formGroup]="pseudoForm" (ngSubmit)="updatePseudo()">
+        <input type="input" formControlName="name" class="form__field text-black" placeholder="Name" name="name" id='name' required />
+        <button>Update name</button>
+      </form>
+    </div>
+  }
+
+</div>
+</div>

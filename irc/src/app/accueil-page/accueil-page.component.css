@@ -1,0 +1,10 @@
+.channel-container{
+  overflow-y: scroll;
+  position: fixed;
+  height: 100vh;
+}
+
+.left50{
+  left:16.6%;
+  overflow-y: scroll;
+}

@@ -1,0 +1,30 @@
+.inputMessage{
+  height:10vh;
+  color:black;
+  padding-bottom: 3rem;
+}
+.channel-container{
+}
+
+.blocInput{
+  width: 64vw;
+}
+
+.popupUsers{
+  position: absolute;
+  top:45%;
+  padding: 1vw;
+  left:30%;
+  display: flex;
+  flex-direction: column;
+  background: black;
+  gap:2vh;
+}
+
+.closePopup{
+  background: red;
+  padding:4px 2px;
+  border-radius: 15px;
+  cursor: pointer;
+  width: fit-content;
+}

@@ -1,0 +1,105 @@
+
+
+<div class="channel-container flex flex-col justify-between text-white h-full p-5">
+  <div class="w-full flex flex-row justify-between">
+    <h1 class="text-3xl channel-detail flex items-center">Channels</h1>
+    <div *ngIf="isCreator" class="p-2">
+      <button class="p-2 bg-amber-50 hover:bg-violet-800 hover:text-white text-black mr-3" (click)="deleteChannel()">Delete salon</button>
+      <button class="p-2 bg-amber-50 hover:bg-violet-800 hover:text-white text-black" (click)="displayUpdateChannelName()">Change channel name</button>
+    </div>
+  </div>
+
+  @if(inputChannelName){
+    <div id="pseudoUpdate">
+
+      <form [formGroup]="channelNameForm" (ngSubmit)="updateChannelName()">
+        <input type="input" formControlName="name" class="form__field text-black" placeholder="Name" name="name" id='name' required />
+        <button>Update name</button>
+      </form>
+    </div>
+  }
+
+
+
+  <div class="flex flex-col h-full overflow-hidden">
+    <div class="flex flex-col toto flex-grow overflow-y-auto gap-3" #messageContainer>
+
+      @if(messageChannel[0]==="none"){
+        <p>Join a channel to see messages</p>
+      }@else{
+        @for (messages of messageChannel; track $index) {
+          @if(messages.currentRoom === actuelRoom || messages.currentRoom === "all") {
+            @if (pseudo=== messages.user){
+              <div class="flex flex-row justify-end ">
+                <div class="flex flex-col items-start gap-2 justify-end w-fit rounded-sm bg-amber-600 p-2 max-w-xl">
+                  <p class="text-sm font-light">Me : </p>
+                  <p class="text-xl font-light text-justify">{{ messages.message }}</p>
+                </div>
+                <img src="./assets/img/toto.png" class="cursor-pointer hover:scale-105 transition h-8">
+              </div>
+            } @else if ("System" === messages.user){
+              <div class="flex flex-row items-start">
+                <div class="flex flex-row items-center gap-2 justify-center">
+                  <p class="text-md font-bold italic">{{ messages.user }} : {{ messages.message }}</p>
+                </div>
+              </div>
+            } @else {
+              <div class="flex flex-row items-start max-w-xl">
+                <div class="flex flex-row items-start gap-2 justify-center ">
+                  <img src="./assets/img/toto.png" class="cursor-pointer hover:scale-105 transition h-8">
+                  <div class="w-fit bg-amber-50 flex-col text-black rounded-sm p-2">
+                    <p class="text-sm font-light h-fit">From : {{ messages.user }} </p>
+                    <p class="text-xl font-light h-fit text-justify">{{ messages.message }}</p>
+                  </div>
+
+                </div>
+              </div>
+            }
+          }
+
+        }
+      }
+
+    </div>
+
+    @if ( openLi === true){
+      <ul class="bg-amber-50 text-black pad">
+        <li (click)="changeInput('/nick')" class="cursor-pointer">/nick nickname : Set the user's nickname within the server.</li>
+        <li (click)="changeInput('/list')" class="cursor-pointer">/list [string] : List the available channels on the server.</li>
+        <li (click)="changeInput('/create')" class="cursor-pointer">/create channel : Create a channel on the server.</li>
+        <li (click)="changeInput('/delete')" class="cursor-pointer">/delete [string] : Delete the channel on the server.</li>
+        <li (click)="changeInput('/join')" class="cursor-pointer">/join channel : Join a channel on the server.</li>
+        <li (click)="changeInput('/leave')" class="cursor-pointer">/leave channel : Leave the channel.</li>
+        <li (click)="changeInput('/users')" class="cursor-pointer">/users : List the users connected to the channel.</li>
+        <li (click)="changeInput('/msg')" class="cursor-pointer">/msg nickname message : Send a message to a specific user.</li>
+      </ul>
+    }
+    @if(isWriting && usernameTyping.username !== pseudo){
+      <p>{{ usernameTyping.username }} is writting...</p>
+    }
+    <form [formGroup]="messageForm" class="blocInput mt-1 flex flex-row align-middle justify-around" (ngSubmit)="sendMessage()">
+      <input type="text" formControlName="message"  [(ngModel)]="dynamicValue" placeholder="Message" class="inputMessage w-11/12" (input)="onInputChange($event)">
+      <button>Send</button>
+    </form>
+  </div>
+
+@if(popupUsers){
+  <div class="popupUsers">
+    <p class="closePopup" (click)="closePopUp()">Close</p>
+    <h1 class="text-xl">Users connected on room {{actuelRoom}} :</h1>
+    @for (user of userConnectedInChannel; track $index) {
+      <p>-{{ user }}</p>
+    }
+  </div>
+}
+
+  @if(showChannel){
+    <div class="popupUsers">
+      <p class="closePopup" (click)="closeListeChannel()">Close</p>
+      <h1 class="text-xl">Available channels :</h1>
+      @for (channel of channelList; track $index) {
+        <p>-{{ channel }}</p>
+      }
+    </div>
+  }
+</div>
